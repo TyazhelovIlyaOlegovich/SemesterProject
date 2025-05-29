@@ -1,0 +1,9 @@
+{
+  "enemy": {
+    "slime": {
+      "name": "Slime",
+      "description": "Slime descripsion...",
+      "reward": 15
+    }
+  }
+}   

@@ -1,0 +1,24 @@
+{
+  "locations": {
+    "forest": {
+      "name": "Forest",
+      "description": "Forest descripsion...",
+      "exits": {
+        "first": { "target": "forest exit 1", "condition": "forest condition" }
+      },
+      "objects": {
+        "object": { "description": "Forest object", "is_takable": true }
+      }
+    },
+    "swamp": {
+      "name": "swamp",
+      "description": "swamp descripsion...",
+      "exits": {
+        "first": { "target": "swamp exit 1", "condition": "swamp condition" }
+      },
+      "objects": {
+        "object": { "description": "swamp object", "is_takable": true }
+      }
+    }
+  }
+}
