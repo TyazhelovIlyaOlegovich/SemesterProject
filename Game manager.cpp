@@ -6,13 +6,9 @@ using json = nlohmann::json;
 
 void game_manager(const json& location_data, const json& enemy_data, const json& text_data, json& save_data) {
 	//location_data частично в dialog system
-	//enemy_data частично в dialog system
+	//enemy частично написана, но требует поправок для загрузки от combat manager
 	//text_data полностью? в dialog system
-	bool in_fight{ false };
 
-	if (in_fight) {
-		//combat_system(save_data["player"]["hp"])>;
-
-	}
-
+	//combat_system(save_data["player"]["hp"], save_data["player"]["заклинания"], enemy полностью?);
+	//чтобы подключтьб в combat manager enemy manager, надо среди подключаемых библиотек написать #include "Enemy Manager.hpp"
 }

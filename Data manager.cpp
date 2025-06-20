@@ -14,7 +14,6 @@ void data_manager(std::ifstream& location, std::ifstream& enemy, std::ifstream& 
         std::cout << "Ошибка: один или больше необходимых файлов не найдены!\n";
     }
 
-
     json location_data, enemy_data, text_data, save_data;
     try {
         location >> location_data;
