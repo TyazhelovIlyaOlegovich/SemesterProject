@@ -25,4 +25,6 @@ void data_manager(std::ifstream& location, std::ifstream& enemy, std::ifstream& 
         std::cerr << "Ошибка парсинга JSON: " << e.what() << "\n";
         throw;
     }
+
+    game_manager(location_data, enemy_data, text_data, save_data);
 }

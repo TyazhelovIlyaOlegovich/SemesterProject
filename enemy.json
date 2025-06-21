@@ -1,9 +1,18 @@
 {
-  "enemy": {
-    "slime": {
-      "name": "Slime",
-      "description": "Slime descripsion...",
-      "reward": 15
+  "enemie": {
+    "goblin": {
+      "name": "Goblin",
+      "drops": {
+        "gold": { "chance": 0.5, "min_amount": 5, "max_amount": 10 },
+        "sword": { "chance": 0.1 }
+      }
+    },
+    "orc": {
+      "name": "Orc",
+      "drops": {
+        "gold": { "chance": 0.7, "min_amount": 5, "max_amount": 10 },
+        "axe": { "chance": 0.3 }
+      }
     }
   }
-}   
+}

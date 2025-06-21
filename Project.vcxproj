@@ -125,12 +125,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Data manager.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Enemy Manager.cpp" />
     <ClCompile Include="Game manager.cpp" />
     <ClCompile Include="JSON parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data manager.hpp" />
+    <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="Enemy manager.hpp" />
     <ClInclude Include="Game manager.hpp" />
   </ItemGroup>
