@@ -3,37 +3,36 @@
 #include <vector>
 #include "Inventory.hpp"
 
-Inventory::Inventory(int experience, int health, int max_health, int money, std::vector<std::string> item)
-		: max_hp(max_health),
-		  hp(health), 
-		  xp(experience), 
-		  gold(money)
-	{
-		for (std::string temp : item) { items[temp] = 0; }
+Inventory::Inventory(int max_health, int health, int max_mana, int mana, int level, int experience, int money, std::vector<std::pair<std::string, int>>& item) {
+		for (auto temp : item) { 
+			items[temp.first] = temp.second; 
+		}
+		stats["max_hp"] = max_health;
+		stats["hp"] = health;
+		stats["max_mana"] = max_mana;
+		stats["mana"] = mana;
+		stats["lvl"] = level;
+		stats["exp"] = experience;
+		stats["gold"] = money;
 	}
 
-int Inventory::get_hp() {
-	return hp;
+int Inventory::get_stat(std::string& stat) {
+	return stats[stat];
 }
 
-void Inventory::set_hp(int health) {
-	hp = health;
-}
-
-int Inventory::get_xp() {
-	return xp;
-}
-
-void Inventory::set_xp(int experience) {
-	xp += experience;
-}
-
-int Inventory::get_gold() {
-	return gold;
-}
-
-void Inventory::set_gold(int money) {
-	gold += money;
+void Inventory::set_stat(std::string& stat, int amount) {
+	if (stat == "exp" and stats[stat] + amount >= 100) {
+		stats["lvl"] += 1;
+		stats["exp"] = stats["exp"] + amount - 100;
+		stats["max_hp"] += 10;
+		stats["hp"] = stats["max_hp"];
+		stats["max_mana"] += 10;
+		stats["mana"] = stats["max_mana"];
+	}
+	else {
+		stat == "hp" and stats["hp"] + amount > stats["max_hp"] ? stats["hp"] = stats["max_hp"] : stats["hp"] += amount;
+		stat == "mana" and stats["mana"] + amount > stats["max_mana"] ? stats["mana"] = stats["max_mana"] : stats["mana"] += amount;
+	}
 }
 
 int Inventory::get_item(std::string item) {

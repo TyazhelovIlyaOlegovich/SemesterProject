@@ -3,25 +3,22 @@
 
 class Inventory {
 private:
+	/**int max_hp{};
 	int hp{};
+	int max_mana{};
+	int mana{};
+	int lvl{};
 	int xp{};
-	int gold{};
+	int gold{};*/
 	std::unordered_map<std::string, int> items{};
+	std::unordered_map<std::string, int> stats{};
 public:
 	const int max_hp{};
-	Inventory(int experience, int health, int max_health, int money, std::vector<std::string> item);
+	Inventory(int experience, int health, int max_health, int mana, int max_mana, int level, int money, std::vector<std::pair<std::string, int>>& item);
 
-	int get_hp();
+	int get_stat(std::string& stat);
 
-	void set_hp(int health);
-
-	int get_xp();
-
-	void set_xp(int experience);
-
-	int get_gold();
-
-	void set_gold(int money);
+	void set_stat(std::string& stat, int amount);
 
 	int get_item(std::string item);
 
