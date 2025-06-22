@@ -1,6 +1,9 @@
 {
-  "player": {
-    "hp": 100,
-    "money": 0
-  }
+  "max_hp": 100,
+  "hp": 100,
+  "max_mana": 100,
+  "mana": 100,
+  "lvl": 1,
+  "exp": 0,
+  "gold": 0
 }   
