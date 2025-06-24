@@ -1,7 +1,3 @@
-#include <unordered_map>
-#include <string>
-#include <vector>
-#include <nlohmann/json.hpp>
 #include "Inventory.hpp"
 
 using json = nlohmann::json;
@@ -25,8 +21,8 @@ int Inventory::get_stat(std::string stat) {
 	return stats[stat];
 }
 
-void Inventory::set_stat(std::string& stat, int amount) {
-	if (stat == "exp" and stats[stat] + amount >= 100) {
+void Inventory::set_stat(std::string stat, int amount) {
+	if (stat == "exp" and stats[stat] + amount >= 100) { 
 		stats["lvl"] += 1;
 		stats["exp"] = stats["exp"] + amount - 100;
 		stats["max_hp"] += 10;
@@ -39,6 +35,7 @@ void Inventory::set_stat(std::string& stat, int amount) {
 		stat == "hp" and stats["hp"] <= 0 ? stats["hp"] + amount == 0 : stats["hp"] += amount;
 		stat == "mana" and stats["mana"] + amount > stats["max_mana"] ? stats["mana"] = stats["max_mana"] : stats["mana"] += amount;
 	}
+	stats[stat] += amount; //set_stat(mana, 20)
 }
 
 int Inventory::get_item(std::string item) {

@@ -1,6 +1,9 @@
 #ifndef ENEMY_MANAGER_HPP
 #define ENEMY_MANAGER_HPP
 
+#include <string>
+#include <random>
+
 class Enemy {
  private:
     int hp{};
@@ -12,6 +15,8 @@ class Enemy {
     const std::string name{};
 
     Enemy(int health, int experience, int minimum, int maximum, std::string status_effect, std::string enemy);
+
+    std::string get_name();
 
     int get_hp();
 

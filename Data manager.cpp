@@ -1,9 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <nlohmann/json.hpp>
-#include <clocale>
 #include "Data manager.hpp"
-#include "Game manager.hpp"
 
 using json = nlohmann::json;
 

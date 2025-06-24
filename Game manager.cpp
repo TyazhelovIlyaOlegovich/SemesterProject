@@ -1,6 +1,3 @@
-#include <iostream>
-#include <string>
-#include <nlohmann/json.hpp>
 #include "Game manager.hpp"
 
 using json = nlohmann::json;
@@ -8,6 +5,12 @@ using json = nlohmann::json;
 int get_input();
 
 void game_manager(const json& location_data, const json& text_data, const json& enemy_data, json& save_data) {
+	std::map<std::string, Location> locations;
+	for (auto& [location_key, data] : location_data["locations"].items()) {
+		locations[location_key] = Location(data.at("name").get<std::string>(), data.at("description").get<std::string>(),
+			data.at("min_room").get<int>(), data.at("max_room").get<int>());
+	}
+
 	std::cout << "Choose what you want to do:\n"
 			  << "1:New game\n"
 			  << "2:Load your game\n"
@@ -32,7 +35,6 @@ void game_manager(const json& location_data, const json& text_data, const json& 
 
 		case(3):
 			std::cout << "Exiting the program. Have a great day!";
-			get_input();
 			exit(1);
 
 		default:

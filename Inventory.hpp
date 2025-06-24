@@ -1,6 +1,11 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 
+#include <unordered_map>
+#include <string>
+#include <vector>
+#include <nlohmann/json.hpp>
+
 using json = nlohmann::json;
 
 class Inventory {
@@ -14,7 +19,7 @@ public:
 
 	int get_stat(std::string stat);
 
-	void set_stat(std::string& stat, int amount);
+	void set_stat(std::string stat, int amount);
 
 	int get_item(std::string item);
 

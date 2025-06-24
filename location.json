@@ -3,22 +3,14 @@
     "forest": {
       "name": "Forest",
       "description": "Forest descripsion...",
-      "exits": {
-        "first": { "target": "forest exit 1", "condition": "forest condition" }
+      "min_room": 2,
+      "max_room": 4
       },
-      "objects": {
-        "object": { "description": "Forest object", "is_takable": true }
-      }
-    },
     "swamp": {
       "name": "swamp",
       "description": "swamp descripsion...",
-      "exits": {
-        "first": { "target": "swamp exit 1", "condition": "swamp condition" }
-      },
-      "objects": {
-        "object": { "description": "swamp object", "is_takable": true }
-      }
+      "min_room": 3,
+      "max_room": 5
     }
   }
 }

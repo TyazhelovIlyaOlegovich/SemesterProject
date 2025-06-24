@@ -1,5 +1,3 @@
-#include <string>
-#include <random>
 #include "Enemy Manager.hpp"
 
 static std::random_device rd;
@@ -12,6 +10,10 @@ Enemy::Enemy(int health, int experience, int minimum, int maximum, std::string s
           name(enemy),
           dist_of_damage(minimum, maximum) //разброс урона врага. Можно просто два одинаковых числа вписать чтобы разброса не было
     {}
+
+std::string Enemy::get_name() {
+    return name;
+}
 
 int Enemy::get_hp() {
     return hp;
