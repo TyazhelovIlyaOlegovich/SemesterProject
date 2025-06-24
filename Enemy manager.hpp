@@ -1,9 +1,6 @@
 #ifndef ENEMY_MANAGER_HPP
 #define ENEMY_MANAGER_HPP
 
-#include <string>
-#include <random>
-
 class Enemy {
  private:
     int hp{};

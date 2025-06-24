@@ -26,5 +26,5 @@ void data_manager(std::ifstream& location, std::ifstream& enemy, std::ifstream& 
         throw;
     }
 
-    game_manager(location_data, enemy_data, text_data, save_data);
+    game_manager(location_data, text_data, enemy_data, save_data);
 }

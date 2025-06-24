@@ -3,6 +3,10 @@
 
 using json = nlohmann::json;
 
-void game_manager(const json& location_data, const json& enemy_data, const json& text_data, json& save_data);
+void game_manager(const json& location_data, const json& text_data, const json& enemy_data, json& save_data);
+
+void game(const json& location_data, const json& text_data, const json& enemy_data, json& save_data);
+
+int get_input();
 
 #endif

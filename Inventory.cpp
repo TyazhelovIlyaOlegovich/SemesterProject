@@ -6,7 +6,9 @@
 
 using json = nlohmann::json;
 
-Inventory::Inventory(int max_health, int health, int max_mana, int mana, int level, int experience, int money, std::vector<std::pair<std::string, int>>& item) {
+Inventory::Inventory(int max_health, int health, int max_mana, int mana, int level, int experience, int money, std::vector<std::pair<std::string, int>>& item, json& save) 
+	: save_data(save)
+		{
 		for (const auto& temp : item) {
 			items[temp.first] = temp.second; 
 		}
@@ -34,6 +36,7 @@ void Inventory::set_stat(std::string& stat, int amount) {
 	}
 	else {
 		stat == "hp" and stats["hp"] + amount > stats["max_hp"] ? stats["hp"] = stats["max_hp"] : stats["hp"] += amount;
+		stat == "hp" and stats["hp"] <= 0 ? stats["hp"] + amount == 0 : stats["hp"] += amount;
 		stat == "mana" and stats["mana"] + amount > stats["max_mana"] ? stats["mana"] = stats["max_mana"] : stats["mana"] += amount;
 	}
 }
@@ -46,7 +49,7 @@ void Inventory::set_item(std::string item, int amount) {
 	items[item] += amount;
 }
 
-void Inventory::save(json& save_data) {
+void Inventory::save() {
 	save_data["max_hp"] = get_stat("max_hp");
 	save_data["hp"] = get_stat("hp");
 	save_data["max_mana"] = get_stat("max_mana");

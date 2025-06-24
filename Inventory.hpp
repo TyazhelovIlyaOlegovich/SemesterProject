@@ -1,5 +1,5 @@
-#ifndef INVENTORY
-#define INVENTORY
+#ifndef INVENTORY_HPP
+#define INVENTORY_HPP
 
 using json = nlohmann::json;
 
@@ -9,7 +9,8 @@ private:
 	std::unordered_map<std::string, int> stats{};
 public:
 	const int max_hp{};
-	Inventory(int experience, int health, int max_health, int mana, int max_mana, int level, int money, std::vector<std::pair<std::string, int>>& item);
+	json save_data{};
+	Inventory(int experience, int health, int max_health, int mana, int max_mana, int level, int money, std::vector<std::pair<std::string, int>>& item, json& save_data);
 
 	int get_stat(std::string stat);
 
@@ -19,7 +20,7 @@ public:
 
 	void set_item(std::string item, int amount);
 
-	void save(json& save_data);
+	void save();
 
 };
 
