@@ -5,11 +5,10 @@ using json = nlohmann::json;
 int get_input();
 
 void game_manager(const json& location_data, const json& text_data, const json& enemy_data, json& save_data) {
-	std::map<std::string, Location> locations;
+	/*std::map<std::string, Location> locations;
 	for (auto& [location_key, data] : location_data["locations"].items()) {
-		locations[location_key] = Location(data.at("name").get<std::string>(), data.at("description").get<std::string>(),
-			data.at("min_room").get<int>(), data.at("max_room").get<int>());
-	}
+		locations[location_key] = Location(data["name"], data["descriprtion"], data["min_room"], data["max_room"]);
+	}*/
 
 	std::cout << "Choose what you want to do:\n"
 			  << "1:New game\n"
@@ -19,7 +18,7 @@ void game_manager(const json& location_data, const json& text_data, const json& 
 	while(true) {
 		switch (get_input()) {
 		case(1):
-			std::cout << "\033[2J\033[1;1H"; //\033[2J Ч очистка экрана
+			std::cout << "\033[2J"; //\033[2J Ч очистка экрана
 			save_data["max_hp"] = 100;
 			save_data["hp"] = 100;
 			save_data["max_mana"] = 100;

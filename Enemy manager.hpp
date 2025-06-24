@@ -22,6 +22,10 @@ class Enemy {
 
     void set_hp(int health);
 
+    std::string get_status();
+
+    void set_status(std::string status);
+
     int get_damage();
 
     void set_damange(int new_min, int new_max);

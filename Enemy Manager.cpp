@@ -23,12 +23,18 @@ void Enemy::set_hp(int health) {
     hp += health;
 }
 
+std::string Enemy::get_status() {
+    return stat;
+}
+
+void Enemy::set_status(std::string status) {
+    stat = status;
+}
+
 int Enemy::get_damage() {
     return dist_of_damage(gen);
 }
 
 void Enemy::set_damange(int new_min, int new_max) {
-    dist_of_damage.param(
-        std::uniform_int_distribution<>::param_type(new_min, new_max)
-    );
+    dist_of_damage.param(std::uniform_int_distribution<>::param_type(new_min, new_max));
 }
