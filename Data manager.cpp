@@ -1,4 +1,5 @@
 #include "Data manager.hpp"
+#include "Inventory.hpp"
 
 using json = nlohmann::json;
 
@@ -21,5 +22,31 @@ void data_manager(std::ifstream& location, std::ifstream& enemy, std::ifstream& 
         throw;
     }
 
-    game_manager(location_data, text_data, enemy_data, save_data);
+    std::map<std::string, Location> locations;
+    for (auto& [location_key, data] : location_data["locations"].items()) {
+        std::string name = data["name"];
+        std::string description = data["description"];
+        int min_room = data["min_room"];
+        int max_room = data["max_room"];
+        locations.emplace(location_key, Location(name, description, min_room, max_room));
+    }
+
+    std::map<std::string, Enemy> enemies;
+    for (auto& [enemy_key, data] : enemy_data["enemies"].items()) {
+        for (auto& [temp, enemy] : data.items()) {
+            std::string name = enemy["name"];
+            std::string stat = enemy["stat"];
+            int max_hp = enemy["max_hp"];
+            int hp = enemy["hp"];
+            int exp = enemy["exp"];
+            int min_dam = enemy["min_dam"];
+            int max_dam = enemy["max_dam"];
+            enemies.emplace(enemy_key, Enemy(max_hp, hp, exp, min_dam, max_dam, stat, name));
+        }
+    }
+
+    Inventory inv(save_data);
+
+
+    game_manager(locations, text_data, enemies, inv);
 }

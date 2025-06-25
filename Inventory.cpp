@@ -2,19 +2,21 @@
 
 using json = nlohmann::json;
 
-Inventory::Inventory(int max_health, int health, int max_mana, int mana, int level, int experience, int money, std::vector<std::pair<std::string, int>>& item, json& save) 
+Inventory::Inventory(json& save) 
 	: save_data(save)
 		{
-		for (const auto& temp : item) {
-			items[temp.first] = temp.second; 
+		for (const auto& [key, value] : save["items"].items()) {
+			items[key] = value;
 		}
-		stats["max_hp"] = max_health;
-		stats["hp"] = health;
-		stats["max_mana"] = max_mana;
-		stats["mana"] = mana;
-		stats["lvl"] = level;
-		stats["exp"] = experience;
-		stats["gold"] = money;
+		stats["max_hp"] = save["max_hp"];
+		stats["hp"] = save["hp"];
+		stats["hp_heal"] = save["hp_heal"];
+		stats["max_mana"] = save["max_mana"];
+		stats["mana"] = save["mana"];
+		stats["mana_heal"] = save["mana_heal"];
+		stats["lvl"] = save["lvl"];
+		stats["exp"] = save["exp"];
+		stats["gold"] = save["gold"];
 	}
 
 int Inventory::get_stat(std::string stat) {
@@ -22,7 +24,7 @@ int Inventory::get_stat(std::string stat) {
 }
 
 void Inventory::set_stat(std::string stat, int amount) {
-	if (stat == "exp" and stats[stat] + amount >= 100) { 
+	if (stat == "exp" and stats[stat] + amount >= 100) {
 		stats["lvl"] += 1;
 		stats["exp"] = stats["exp"] + amount - 100;
 		stats["max_hp"] += 10;
@@ -30,12 +32,21 @@ void Inventory::set_stat(std::string stat, int amount) {
 		stats["max_mana"] += 10;
 		stats["mana"] = stats["max_mana"];
 	}
+	else if (stat == "hp_heal") {
+		stats["hp"] += 20;
+		stats["mana_heal"]--;
+	}
+	else if (stat == "mana_heal") {
+		stats["mana"] += 20;
+		stats["mana_heal"]--;
+	}
 	else {
 		stat == "hp" and stats["hp"] + amount > stats["max_hp"] ? stats["hp"] = stats["max_hp"] : stats["hp"] += amount;
-		stat == "hp" and stats["hp"] <= 0 ? stats["hp"] + amount == 0 : stats["hp"] += amount;
+		stat == "hp" and stats["hp"] + amount <= 0 ? stats["hp"] = 0: stats["hp"] += amount;
 		stat == "mana" and stats["mana"] + amount > stats["max_mana"] ? stats["mana"] = stats["max_mana"] : stats["mana"] += amount;
+		stat == "mana" and stats["mana"] + amount <= 0 ? stats["mana"] = 0 : stats["mana"] += amount;
 	}
-	stats[stat] += amount; //set_stat(mana, 20)
+	stats[stat] += amount;
 }
 
 int Inventory::get_item(std::string item) {
@@ -55,6 +66,6 @@ void Inventory::save() {
 	save_data["exp"] = get_stat("exp");
 	save_data["gold"] = get_stat("gold");
 	for (const auto& pair : items) {
-		save_data[pair.first] = pair.second;
+		save_data["items"][pair.first] = pair.second;
 	}
 }

@@ -11,16 +11,21 @@ class Enemy {
     std::string stat{};
  public:
     const int exp{};
+    const int max_hp{};
     //const int speed{};
     const std::string name{};
 
-    Enemy(int health, int experience, int minimum, int maximum, std::string status_effect, std::string enemy);
+    Enemy(int max_health, int health, int experience, int minimum, int maximum, std::string status_effect, std::string enemy);
 
     std::string get_name();
+
+    int get_exp();
 
     int get_hp();
 
     void set_hp(int health);
+
+    void refresh_hp();
 
     std::string get_status();
 

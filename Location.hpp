@@ -6,16 +6,15 @@
 #include <random>
 
 class Location {
+private:
+	std::uniform_int_distribution<> dist_of_rooms;
 public:
-	const std::uniform_int_distribution<> dist_of_rooms;
 	const std::string location_name{};
-	const std::string location_desription{};
+	const std::string location_desñription{};
 
 	Location(const std::string name, const std::string description, int min_room, int max_room);
 
-	std::string get_name();
-
-	std::string get_description();
+	int get_room();
 
 };
 

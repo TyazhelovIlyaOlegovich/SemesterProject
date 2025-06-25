@@ -5,12 +5,16 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include "Location.hpp"
+#include "Inventory.hpp"
+#include "Enemy Manager.hpp"
 
 using json = nlohmann::json;
 
-void game_manager(const json& location_data, const json& text_data, const json& enemy_data, json& save_data);
+void game_manager(std::map<std::string, Location>& locations, const json& text_data, std::map<std::string, Enemy>& enemies, Inventory& inv);
 
-void game(const json& location_data, const json& text_data, const json& enemy_data, json& save_data);
+void game(std::map<std::string, Location>& locations, const json& text_data, std::map<std::string, Enemy>& enemies, Inventory& inv);
+
+void show_locations(std::map<std::string, Location>& locations, std::map<std::string, Enemy>& enemies, Inventory& inv);
 
 int get_input();
 

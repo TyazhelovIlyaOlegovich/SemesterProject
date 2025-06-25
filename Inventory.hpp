@@ -15,7 +15,7 @@ private:
 public:
 	const int max_hp{};
 	json save_data{};
-	Inventory(int experience, int health, int max_health, int mana, int max_mana, int level, int money, std::vector<std::pair<std::string, int>>& item, json& save_data);
+	Inventory(json& save);
 
 	int get_stat(std::string stat);
 
