@@ -1,0 +1,57 @@
+{
+  "water": {
+    "name": "water", 
+    "dmg": 0, 
+    "mana_cost": 5
+  },
+  "fire": {
+    "name": "fire", 
+    "dmg": 14, 
+    "mana_cost": 6
+  },
+  "light": {
+    "name": "light", 
+    "dmg": 17, 
+    "mana_cost": 7
+  },
+  "heal": {
+    "name": "heal", 
+    "dmg": -10, 
+    "mana_cost": 5
+  },
+  "sheild": {
+    "name": "sheild", 
+    "dmg": 0, 
+    "mana_cost": 15
+  },
+  "death": {
+    "name": "death", 
+    "dmg": 20, 
+    "mana_cost": 9
+  },
+  "cold": {
+    "name": "cold", 
+    "dmg": 8, 
+    "mana_cost": 20
+  },
+  "stone": {
+    "name": "stone", 
+    "dmg": 15, 
+    "mana_cost": 5
+  },
+  "toxic": {
+    "name": "toxic", 
+    "dmg": 25, 
+    "mana_cost": 14
+  },
+  "ice": {
+    "name": "ice", 
+    "dmg": 40, 
+    "mana_cost": 25
+  },
+  "steam": {
+    "name": "steam", 
+    "dmg": 19, 
+    "mana_cost": 11
+  }
+}

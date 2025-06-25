@@ -1,27 +1,9 @@
 #include "Data manager.hpp"
-#include "Inventory.hpp"
+#include "dllmain.cpp"
 
 using json = nlohmann::json;
 
-void data_manager(std::ifstream& location, std::ifstream& enemy, std::ifstream& text, std::ifstream& save) {
-    setlocale(LC_ALL, "RU");
-
-    if (!location.is_open() or !enemy.is_open() or !text.is_open() or !save.is_open()) {
-        std::cout << "Ошибка: один или больше необходимых файлов не найдены!\n";
-    }
-
-    json location_data, enemy_data, text_data, save_data;
-    try {
-        location >> location_data;
-        enemy >> enemy_data;
-        text >> text_data;
-        save >> save_data;
-    }
-    catch (const json::parse_error& e) {
-        std::cerr << "Ошибка парсинга JSON: " << e.what() << "\n";
-        throw;
-    }
-
+void data_manager(const json& location_data, const json& enemy_data, json& text_data, json& save_data, const json& elements_data) {
     std::map<std::string, Location> locations;
     for (auto& [location_key, data] : location_data["locations"].items()) {
         std::string name = data["name"];
@@ -36,17 +18,37 @@ void data_manager(std::ifstream& location, std::ifstream& enemy, std::ifstream& 
         for (auto& [temp, enemy] : data.items()) {
             std::string name = enemy["name"];
             std::string stat = enemy["stat"];
+            std::string drop = enemy["drop"];
             int max_hp = enemy["max_hp"];
             int hp = enemy["hp"];
             int exp = enemy["exp"];
             int min_dam = enemy["min_dam"];
             int max_dam = enemy["max_dam"];
-            enemies.emplace(enemy_key, Enemy(max_hp, hp, exp, min_dam, max_dam, stat, name));
+            if (!text_data.contains(drop)) {
+                text_data[drop] = "20";
+            }
+            enemies.emplace(enemy_key, Enemy(max_hp, hp, exp, min_dam, max_dam, drop, stat, name));
         }
+    }
+
+    std::ofstream output("text.json");
+    output << text_data.dump(2);
+    output.close();
+
+    std::map<std::string, std::string> shop;
+    for (auto& [shop_key, shop_data] : text_data.items()) {
+        shop[shop_key] = shop_data;
     }
 
     Inventory inv(save_data);
 
+    std::map<std::string, Element> elements;
+    for (auto& [element_key, element_data] : elements_data.items()) {
+        std::string name = element_data["name"];
+        int dmg = element_data["dmg"];
+        int mana_cost = element_data["mana_cost"];
+        elements.emplace(element_key, Element(name, dmg, mana_cost));
+    }
 
     game_manager(locations, text_data, enemies, inv);
 }

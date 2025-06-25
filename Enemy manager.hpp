@@ -12,14 +12,10 @@ class Enemy {
  public:
     const int exp{};
     const int max_hp{};
-    //const int speed{};
+    const std::string drop{};
     const std::string name{};
 
-    Enemy(int max_health, int health, int experience, int minimum, int maximum, std::string status_effect, std::string enemy);
-
-    std::string get_name();
-
-    int get_exp();
+    Enemy(int max_health, int health, int experience, int minimum, int maximum, std::string loot, std::string status_effect, std::string enemy);
 
     int get_hp();
 

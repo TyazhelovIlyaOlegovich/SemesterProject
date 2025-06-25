@@ -3,22 +3,15 @@
 static std::random_device rd;
 static std::mt19937 gen(rd());
 
-Enemy::Enemy(int max_health, int health, int experience, int minimum, int maximum, std::string status_effect, std::string enemy)
+Enemy::Enemy(int max_health, int health, int experience, int minimum, int maximum, std::string loot, std::string status_effect, std::string enemy)
         : max_hp(max_health),
           hp(health),
+          drop(loot),
           exp(experience), //сколько экспы выпадет
           stat(status_effect), //вдруг что-то накладываем, наверное эффекты сделать в combat manager
           name(enemy),
           dist_of_damage(minimum, maximum) //разброс урона врага. ћожно просто два одинаковых числа вписать чтобы разброса не было
     {}
-
-std::string Enemy::get_name() {
-    return name;
-}
-
-int Enemy::get_exp() {
-    return exp;
-}
 
 int Enemy::get_hp() {
     return hp;

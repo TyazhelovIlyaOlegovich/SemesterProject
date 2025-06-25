@@ -126,6 +126,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Data manager.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Fight_manager.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Enemy Manager.cpp" />
     <ClCompile Include="Game manager.cpp" />

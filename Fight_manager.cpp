@@ -22,7 +22,7 @@ bool fight_manager(Enemy& enemy, //кого бьём
     std::string oldstatus = "";
     int checkstatus = 0;
     int freezemob = 0;//если равен 1 то не наносит урон в раунде
-    std::cout << "GET READY TO FIGHT WITH " << enemy.get_name() << "\n 3... 2... 1... \n   FIGHT \n";
+    std::cout << "GET READY TO FIGHT WITH " << enemy.name << "\n 3... 2... 1... \n   FIGHT \n";
 
     while (true) {
         int answer = -1;
@@ -30,7 +30,7 @@ bool fight_manager(Enemy& enemy, //кого бьём
 
 
         while (answer < stick.get_amount()) {
-            std::cout << enemy.get_name() << " " << enemy.get_hp() << "\n" << "\n";
+            std::cout << enemy.name << " " << enemy.get_hp() << "\n" << "\n";
 
             std::cout << "Your Health " << std::to_string(inv.get_stat("hp")) << ".  Your Mana " << std::to_string(inv.get_stat("mana")) << ".\n";
 

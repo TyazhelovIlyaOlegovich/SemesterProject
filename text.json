@@ -1,7 +1,5 @@
 {
-  "dialog": {
-    "npc": {
-      "meeting": "test text"
-    }
-  }
+  "Goblin's ears": "10",
+  "Orc's nose": "20",
+  "greatings": "Hey there, kiddo. Wanna sell some your stuff?"
 }

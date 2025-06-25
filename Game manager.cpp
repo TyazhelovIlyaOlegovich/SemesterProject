@@ -43,11 +43,16 @@ void game_manager(std::map<std::string, Location>& locations, const json& text_d
 
 void game(std::map<std::string, Location>& locations, const json& text_data, std::map<std::string, Enemy>& enemies, Inventory& inv) {
 	while (true) {
-		std::cout << "Now we are in game";
+		std::cout << "What to do?\n"
+				  << "1 : Go to shop\n"
+				  << "2 : Go for an adventure\n"
+				  << "3 : Exit game\n"
+				  << "Your choice: ";
 		switch (get_input()) {
 		case(1):
 			//shop const json& text_data
 		case(2):
+			std::cout << "\033[2J\033[1;1H";
 			show_locations(locations, enemies, inv);
 			break;
 
@@ -62,19 +67,37 @@ void game(std::map<std::string, Location>& locations, const json& text_data, std
 }
 
 void show_locations(std::map<std::string, Location>& locations, std::map<std::string, Enemy>& enemies, Inventory& inv) {
-	int count{ 0 };
+	int count{ 1 };
 	for (const auto& [location_key, data] : locations) {
-		std::cout << count << " : " << location_key << '\n';
+		std::cout << count << " : " << data.location_name << ' ';
 		std::cout << data.location_desñription << '\n';
 		count++;
 	}
 
-	std::cout << "Your input: ";
-	while (true) {
+	bool choice{ true };
+	while (choice) {
+		std::cout << "Your input: ";
 		switch (get_input()) {
 		case(1):
 			std::cout << locations.at("forest").get_room();
+			choice = false;
 			break;
+
+		case(2):
+			std::cout << locations.at("swamp").get_room();
+			choice = false;
+			break;
+
+		case(3):
+			std::cout << locations.at("forest").get_room();
+			break;
+
+		case(4):
+			choice = false;
+			break;
+
+		default:
+			std::cout << "Choose from the list: ";
 		}
 	}
 }
