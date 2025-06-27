@@ -1,19 +1,11 @@
 #pragma once
-#include <vector>
-#include <iostream>
-#include <fstream> 
-#include <string>
-#include <cstdio>
-#include <random>
-#include <sstream>
-#include "Enemy Manager.hpp"
-#include "Inventory.hpp"
-#include "Game manager.hpp"
 
-static bool fight_manager(Enemy& enemy, //кого бьём
+#include "Fight_manager.hpp"
+
+bool fight_manager(Enemy& enemy, //кого бьём
     Inventory& inv, //мы сами
-    Stick& stick, //наш посох
-    Spell& spell //заклинания
+    Stick stick, //наш посох
+    Spell spell //заклинания
 )
 {
     int enhp = enemy.get_hp();//хп врага
@@ -26,11 +18,11 @@ static bool fight_manager(Enemy& enemy, //кого бьём
     std::cout << "GET READY TO FIGHT WITH " << enemy.name << "\n 3... 2... 1... \n   FIGHT \n";
 
     while (true) {
-        int answer = -1;
+        int answer = 0;
 
 
 
-        while (answer < stick.get_amount()) {
+        while (answer <= stick.get_amount()) {
             std::cout << enemy.name << " " << enemy.get_hp() << "\n" << "\n";
 
             std::cout << "Your Health " << inv.get_stat("hp") << ".  Your Mana " << inv.get_stat("mana") << ".\n";
@@ -121,4 +113,4 @@ static bool fight_manager(Enemy& enemy, //кого бьём
 
 
     //return 1;
-}
+};

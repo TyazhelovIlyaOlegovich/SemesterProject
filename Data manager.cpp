@@ -34,9 +34,11 @@ void data_manager(const json& location_data, const json& enemy_data, json& text_
     output << text_data.dump(2);
     output.close();
 
-    std::map<std::string, std::string> shop;
+    std::map<std::string, std::pair<bool, int>> shop;
     for (auto& [shop_key, shop_data] : text_data.items()) {
-        shop[shop_key] = shop_data;
+        bool can_buy = shop_data["can_buy"];
+        int cost = shop_data["cost"];
+        shop.emplace(shop_key, std::make_pair(can_buy, cost));
     }
 
     std::map<std::string, Element> elements;
@@ -58,9 +60,13 @@ void data_manager(const json& location_data, const json& enemy_data, json& text_
         }
     }
 
+    for (auto& [stick_key, stick_data] : sticks) {
+        std::cout << stick_key << ' ' << stick_data.get_name() << ' ' << stick_data.get_cells() << ' ' << stick_data.get_maxelements() << ' ' << stick_data.get_amount() << '\n';
+    }
+
     Inventory inv(save_data);
 
     Spell spell("0", 0, 0, "0", elements);
 
-    game_manager(locations, text_data, enemies, inv, sticks, spell);
+    game_manager(locations, shop, enemies, inv, sticks, spell);
 }

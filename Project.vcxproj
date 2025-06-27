@@ -136,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data manager.hpp" />
+    <ClInclude Include="dllmain.hpp" />
+    <ClInclude Include="Fight_manager.hpp" />
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="Enemy manager.hpp" />
     <ClInclude Include="Game manager.hpp" />
