@@ -1,4 +1,5 @@
 ﻿// dllMAGIC!!!!!!!!!!! АЛАХАУИДАВРА!
+#pragma once
 #include <vector>
 #include <iostream>
 #include <fstream> 
@@ -38,32 +39,15 @@ private:
     int mana;
     int DMGG;
     std::string DEBFF;
+    std::map<std::string, Element> el;
 public:
-    //желательно доставать всё это из json
-    Element water = Element("water", 0, 5);//непонятная штука
-    Element fire = Element("fire", 14, 6);//остаточные 2 дмг 3 хода
-    Element light = Element("light", 17, 7);
-    Element heal = Element("heal", -10, 5);
-    Element sheild = Element("sheild", 0, 15);//непонятная штука
-    Element death = Element("death", 20, 9);
-    Element cold = Element("cold", 8, 20);
-    Element stone = Element("stone", 15, 5);
-    //елементы из комбо снизу
-    Element toxic = Element("toxic", 25, death.get_manacost()+water.get_manacost());//смерт+вода остаточное 1 дмг 9 ходов
-    Element ice = Element("ice", 40, cold.get_manacost()+water.get_manacost()); //вода+холод
-    Element steam = Element("steam", 19, fire.get_manacost()+water.get_manacost());//вода+огонь
-    //желательно сделать так чтобы они вытаскивались из json как минимум их значения дмг и стоимость маны *
-
-    //std::string  spell;
-
     
-
-    Spell(std::string name, int DMGG, int mana, std::string DEBFF)
+    Spell(const std::string name, int DMGG, int mana, const std::string DEBFF, std::map<std::string, Element>& elements)
         : name(name),//имя
           mana(mana), //скок маны жрёт
           DMGG(DMGG), //скок дамажет противника
-          DEBFF(DEBFF)//дебафф
-        
+          DEBFF(DEBFF),//дебафф
+          el(elements)
     {}
 
     std::string get_name() { return this->name; }
@@ -76,6 +60,11 @@ public:
     //        spell += std::string(1, magic[i]);
     //    }
     //}
+    
+    std::map<std::string, Element>& get_elements() {
+        return el;
+    }
+
     std::vector <string> get_truesepll(std::string spell,int elements)//тута кароч надо найти противоречия, сделать комбовые елементы (Возвращает название заклиния в 1 ячейке, во 2 урон,в 3 стоимость маны, в 4 остаточный эффект 0-ничего, fire гореть 3 хода по 2 дмг, toxic- 9ходов по 1 дмг, freeze- пропуск хода противника заорозка.)
      {
         std::vector <string> truespell;//название заклинания/урон/дебаф
@@ -148,7 +137,7 @@ public:
         if (sh > 0 and (w + l + d + c + st + h + to + ic + ste) > 0) { std::cout << "This spell is sheid? 0-nope(remove sheild) 1-yes(it will remove other elements)\n"; std::cin >> sheld; std::cout << "\n"; }
 
         //щит...
-        if (sheld) { truespell.push_back("Sheild"); truespell.push_back("0"); truespell.push_back(std::to_string(sheild.get_manacost())), truespell.push_back("0"); }
+        if (sheld) { truespell.push_back("Sheild"); truespell.push_back("0"); truespell.push_back(std::to_string(get_elements().at("shield").get_manacost())), truespell.push_back("0"); }
 
         //а тут... это надо типо название + урон + дебаф
         else{ 
@@ -157,16 +146,16 @@ public:
             std::string debuff= "0";
             int dmg = 0;
             
-            if (f > 0) { spellname += "Fire "; manacost += fire.get_manacost(); dmg += fire.get_dmg(); }
-            if (w > 0){ spellname += "Water "; manacost += water.get_manacost(); dmg += water.get_dmg();}
-            if (l > 0) { spellname += "Light "; manacost += light.get_manacost(); dmg += light.get_dmg(); }
-            if (d > 0) { spellname += "Death "; manacost += death.get_manacost(); dmg += death.get_dmg(); }
-            if (st > 0) { spellname += "Stone "; manacost += stone.get_manacost(); dmg += stone.get_dmg(); }
-            if (h > 0) { spellname += "Heal "; manacost += heal.get_manacost(); dmg += heal.get_dmg(); }
-            if (c > 0) { spellname += "Cold "; manacost += cold.get_manacost(); dmg += cold.get_dmg(); }
-            if (to > 0) { spellname += "Toxic "; manacost += toxic.get_manacost(); dmg += toxic.get_dmg(); }
-            if (ic > 0) { spellname += "Ice "; manacost += ice.get_manacost(); dmg += ice.get_dmg(); }
-            if (ste > 0) { spellname += "Steam "; manacost += steam.get_manacost(); dmg += steam.get_dmg(); }
+            if (f > 0) { spellname += "Fire "; manacost += get_elements().at("fire").get_manacost(); dmg += get_elements().at("fire").get_dmg(); }
+            if (w > 0){ spellname += "Water "; manacost += get_elements().at("water").get_manacost(); dmg += get_elements().at("water").get_dmg();}
+            if (l > 0) { spellname += "Light "; manacost += get_elements().at("light").get_manacost(); dmg += get_elements().at("light").get_dmg(); }
+            if (d > 0) { spellname += "Death "; manacost += get_elements().at("death").get_manacost(); dmg += get_elements().at("death").get_dmg(); }
+            if (st > 0) { spellname += "Stone "; manacost += get_elements().at("stone").get_manacost(); dmg += get_elements().at("stone").get_dmg(); }
+            if (h > 0) { spellname += "Heal "; manacost += get_elements().at("heal").get_manacost(); dmg += get_elements().at("heal").get_dmg(); }
+            if (c > 0) { spellname += "Cold "; manacost += get_elements().at("cold").get_manacost(); dmg += get_elements().at("cold").get_dmg(); }
+            if (to > 0) { spellname += "Toxic "; manacost += get_elements().at("toxic").get_manacost(); dmg += get_elements().at("toxic").get_dmg(); }
+            if (ic > 0) { spellname += "Ice "; manacost += get_elements().at("ice").get_manacost(); dmg += get_elements().at("ice").get_dmg(); }
+            if (ste > 0) { spellname += "Steam "; manacost += get_elements().at("steam").get_manacost(); dmg += get_elements().at("steam").get_dmg(); }
 
             //приоритет в дебафе будет идти на заморозку, потом на токсик и только потом на огонь ;p
             if (c > 0) { debuff = "freeze"; }
@@ -188,12 +177,13 @@ private:
     int cells;//3-20 ячеек под магию
     int maxelements;//3-8 элементов в ячейке
     //vector <Element> magica[];//тута хранить магики-чуда заклятия
+    std::map<std::string, Element> el;
 public:
-
-    Stick (std::string name, int cells, int maxelements)
+    Stick (std::string name, int cells, int maxelements, std::map<std::string, Element>& elements)
         : name(name),
         cells(cells),//3-20 ячеек под магию
-        maxelements(maxelements)//3-8 элементов в ячейке
+        maxelements(maxelements),//3-8 элементов в ячейке
+        el(elements)
     {}
 
     std::string get_name() { return this->name; }
@@ -204,17 +194,21 @@ public:
 
     int get_amount() { return spells.size(); }//кол-во занятых ячеек
 
+    std::map<std::string, Element>& get_elements() {
+        return el;
+    }
+
     void add_spell(int amount, std::vector<string> spell)//скок уже есть ?
     {
-        Spell sp(spell[0], std::stoi(spell[1]), std::stoi(spell[2]), spell[3]);
+        Spell sp(spell[0], std::stoi(spell[1]), std::stoi(spell[2]), spell[3], get_elements());
         if (amount < cells) { spells.push_back(sp); }
         else { std::cout << "У тя заняты ячейки"; }
     }
 
     Spell get_spell(int amount) { 
-        if (amount <= spells.size()) { return spells[amount]; }
+        if (amount < spells.size()) { return spells[amount]; }
         else {
-            std::cout << "NOTHING IS HERE\n";  Spell nothing ("0", 0, 0, 0); return nothing;
+            std::cout << "NOTHING IS HERE\n";  Spell nothing("0", 0, 0, "0", get_elements()); return nothing;
         }
     }
 

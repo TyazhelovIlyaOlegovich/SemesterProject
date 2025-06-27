@@ -1,5 +1,19 @@
 {
-  "Goblin's ears": "10",
-  "Orc's nose": "20",
+  "Goblin's ears": {
+    "cost": "10",
+    "can_buy": true
+  },
+  "Orc's nose": {
+    "cost": "20",
+    "can_buy": true
+  },
+  "intermedium_stick": {
+    "cost": "400",
+    "can_buy": false
+  },
+  "master_stick": {
+    "cost": "1000",
+    "can_buy": false
+  },
   "greatings": "Hey there, kiddo. Wanna sell some your stuff?"
 }

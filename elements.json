@@ -19,8 +19,8 @@
     "dmg": -10, 
     "mana_cost": 5
   },
-  "sheild": {
-    "name": "sheild", 
+  "shield": {
+    "name": "shield", 
     "dmg": 0, 
     "mana_cost": 15
   },

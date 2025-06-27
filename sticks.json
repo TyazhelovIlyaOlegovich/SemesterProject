@@ -1,0 +1,20 @@
+{
+  "newbie_stick": {
+    "name": "newbie stick",
+    "cells": 3,
+    "maxelements": 3,
+    "obtained": true
+  },
+  "intermedium_stick": {
+    "name": "intermedium stick",
+    "cells": 10,
+    "maxelements": 5,
+    "obtained": false
+  },
+  "master_stick": {
+    "name": "master stick",
+    "cells": 20,
+    "maxelements": 8,
+    "obtained": false
+  }
+}

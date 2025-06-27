@@ -15,7 +15,7 @@ private:
 public:
 	const int max_hp{};
 	json save_data{};
-	Inventory(json& save);
+	Inventory(const json& save);
 
 	int get_stat(std::string stat);
 

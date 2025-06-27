@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <iostream>
 #include <fstream> 
@@ -7,12 +8,12 @@
 #include <sstream>
 #include "Enemy Manager.hpp"
 #include "Inventory.hpp"
-#include "dllmain.cpp"
+#include "Game manager.hpp"
 
-bool fight_manager(Enemy& enemy, //кого бьём
+static bool fight_manager(Enemy& enemy, //кого бьём
     Inventory& inv, //мы сами
-    Stick stick, //наш посох
-    Spell spell //заклинания
+    Stick& stick, //наш посох
+    Spell& spell //заклинания
 )
 {
     int enhp = enemy.get_hp();//хп врага
@@ -32,7 +33,7 @@ bool fight_manager(Enemy& enemy, //кого бьём
         while (answer < stick.get_amount()) {
             std::cout << enemy.name << " " << enemy.get_hp() << "\n" << "\n";
 
-            std::cout << "Your Health " << std::to_string(inv.get_stat("hp")) << ".  Your Mana " << std::to_string(inv.get_stat("mana")) << ".\n";
+            std::cout << "Your Health " << inv.get_stat("hp") << ".  Your Mana " << inv.get_stat("mana") << ".\n";
 
             std::cout << "Your cells:\n";
 

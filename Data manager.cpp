@@ -1,9 +1,8 @@
 #include "Data manager.hpp"
-#include "dllmain.cpp"
 
 using json = nlohmann::json;
 
-void data_manager(const json& location_data, const json& enemy_data, json& text_data, json& save_data, const json& elements_data) {
+void data_manager(const json& location_data, const json& enemy_data, json& text_data, const json& save_data, const json& elements_data, const json& sticks_data) {
     std::map<std::string, Location> locations;
     for (auto& [location_key, data] : location_data["locations"].items()) {
         std::string name = data["name"];
@@ -40,8 +39,6 @@ void data_manager(const json& location_data, const json& enemy_data, json& text_
         shop[shop_key] = shop_data;
     }
 
-    Inventory inv(save_data);
-
     std::map<std::string, Element> elements;
     for (auto& [element_key, element_data] : elements_data.items()) {
         std::string name = element_data["name"];
@@ -50,5 +47,20 @@ void data_manager(const json& location_data, const json& enemy_data, json& text_
         elements.emplace(element_key, Element(name, dmg, mana_cost));
     }
 
-    game_manager(locations, text_data, enemies, inv);
+    std::map<std::string, Stick> sticks;
+    for (auto& [stick_key, stick_data] : sticks_data.items()) {
+        std::string name = stick_data["name"];
+        int cells = stick_data["cells"];
+        int maxelements = stick_data["maxelements"];
+        bool temp = stick_data["obtained"];
+        if (temp) {
+            sticks.emplace(stick_key, Stick(name, cells, maxelements, elements));
+        }
+    }
+
+    Inventory inv(save_data);
+
+    Spell spell("0", 0, 0, "0", elements);
+
+    game_manager(locations, text_data, enemies, inv, sticks, spell);
 }

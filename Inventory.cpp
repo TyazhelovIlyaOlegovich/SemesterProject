@@ -2,7 +2,7 @@
 
 using json = nlohmann::json;
 
-Inventory::Inventory(json& save) 
+Inventory::Inventory(const json& save) 
 	: save_data(save)
 		{
 		for (const auto& [key, value] : save["items"].items()) {

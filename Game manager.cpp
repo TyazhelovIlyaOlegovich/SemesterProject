@@ -4,7 +4,7 @@ using json = nlohmann::json;
 
 int get_input();
 
-void game_manager(std::map<std::string, Location>& locations, const json& text_data, std::map<std::string, Enemy>& enemies, Inventory& inv) {
+void game_manager(std::map<std::string, Location>& locations, const json& text_data, std::map<std::string, Enemy>& enemies, Inventory& inv, std::map<std::string, Stick> sticks, Spell spell) {
 	
 
 	std::cout << "Choose what you want to do:\n"
@@ -23,12 +23,12 @@ void game_manager(std::map<std::string, Location>& locations, const json& text_d
 			inv.set_stat("lvl", 1);
 			inv.set_stat("exp", 0);
 			inv.set_stat("gold", 0);
-			game(locations, text_data, enemies, inv);
+			game(locations, text_data, enemies, inv, sticks, spell);
 			break;
 
 		case(2):
 			std::cout << "\033[2J\033[1;1H";
-			game(locations, text_data, enemies, inv);
+			game(locations, text_data, enemies, inv, sticks, spell);
 			break;
 
 		case(3):
@@ -41,7 +41,7 @@ void game_manager(std::map<std::string, Location>& locations, const json& text_d
 	}
 }
 
-void game(std::map<std::string, Location>& locations, const json& text_data, std::map<std::string, Enemy>& enemies, Inventory& inv) {
+void game(std::map<std::string, Location>& locations, const json& text_data, std::map<std::string, Enemy>& enemies, Inventory& inv, std::map<std::string, Stick> sticks, Spell spell) {
 	while (true) {
 		std::cout << "What to do?\n"
 				  << "1 : Go to shop\n"
@@ -53,7 +53,7 @@ void game(std::map<std::string, Location>& locations, const json& text_data, std
 			//shop const json& text_data
 		case(2):
 			std::cout << "\033[2J\033[1;1H";
-			show_locations(locations, enemies, inv);
+			show_locations(locations, enemies, inv, sticks, spell);
 			break;
 
 		case(3):
@@ -66,7 +66,7 @@ void game(std::map<std::string, Location>& locations, const json& text_data, std
 	}
 }
 
-void show_locations(std::map<std::string, Location>& locations, std::map<std::string, Enemy>& enemies, Inventory& inv) {
+void show_locations(std::map<std::string, Location>& locations, std::map<std::string, Enemy>& enemies, Inventory& inv, std::map<std::string, Stick> sticks, Spell spell) {
 	int count{ 1 };
 	for (const auto& [location_key, data] : locations) {
 		std::cout << count << " : " << data.location_name << ' ';
@@ -78,10 +78,21 @@ void show_locations(std::map<std::string, Location>& locations, std::map<std::st
 	while (choice) {
 		std::cout << "Your input: ";
 		switch (get_input()) {
-		case(1):
-			std::cout << locations.at("forest").get_room();
+		case(1): {
+			std::string temp{};
+			sticks.count("master_stick") ? temp = "master_stick" :
+			sticks.count("intermedium_stick") ? temp = "intermedium_stick" :
+			sticks.count("newbie_stick") ? temp = "newbie_stick" : 0;
+			for (int i{}; i < locations.at("forest").get_room(); i++) {
+				if (fight_manager(enemies.at("forest"), inv, sticks.at(temp), spell)) {
+					std::cout << "You won\n";
+				}
+				else
+					std::cout << "You lost";
+			}
 			choice = false;
 			break;
+		}
 
 		case(2):
 			std::cout << locations.at("swamp").get_room();
