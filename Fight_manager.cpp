@@ -1,13 +1,6 @@
-#include <vector>
-#include <iostream>
-#include <fstream> 
-#include <string>
-#include <cstdio>
-#include <random>
-#include <sstream>
-#include "Enemy Manager.hpp"
-#include "Inventory.hpp"
-#include "dllmain.cpp"
+#pragma once
+
+#include "Fight_manager.hpp"
 
 bool fight_manager(Enemy& enemy, //кого бьём
     Inventory& inv, //мы сами
@@ -120,4 +113,4 @@ bool fight_manager(Enemy& enemy, //кого бьём
 
 
     //return 1;
-}
+};
