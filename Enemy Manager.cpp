@@ -18,7 +18,8 @@ int Enemy::get_hp() {
 }
 
 void Enemy::set_hp(int health) {
-    hp += health;
+    hp -= health;
+    std::cout << "New hp " << hp;
 }
 
 void Enemy::refresh_hp() {

@@ -1,6 +1,7 @@
 #ifndef ENEMY_MANAGER_HPP
 #define ENEMY_MANAGER_HPP
 
+#include <iostream>
 #include <string>
 #include <random>
 

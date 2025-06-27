@@ -31,12 +31,12 @@ bool fight_manager(Enemy& enemy, //кого бьём
 
             if (stick.get_amount() != 0) {
                 for (int i = 0; i < stick.get_cells(); i++) {
-                    std::cout << std::to_string(i + 1) << " " << stick.get_spell(i).get_name() << " mana's cost " << std::to_string(stick.get_spell(i).get_manacost());
+                    std::cout << std::to_string(i + 1) << " " << stick.get_spell(i).get_dmg() << ' ' << stick.get_spell(i).get_name() << " mana's cost " << std::to_string(stick.get_spell(i).get_manacost());
                 }
             }
             else { std::cout << "Nothing"; }
 
-            if (answer == 0) {
+            
                 std::cout << "If you want use cell click number of it (if you did it you can't create new one), if you want create new one click 0\n";
                 std::cout << "For end press any Number what's not 0 or cell\n";
 
@@ -49,25 +49,29 @@ bool fight_manager(Enemy& enemy, //кого бьём
                     std::cout << "\n";
                     stick.add_spell(stick.get_amount(), spell.get_truesepll(set_spell, stick.get_maxelements()));
                 }
-            }
-            else if (answer > 0 and answer < stick.get_amount()) {
+            
+            else if (answer > 0 and answer <= stick.get_amount()) {
 
                 std::cout << "\nIf you want use cell click number of it or any ohter numbers for skip move\n";
                 std::cin >> answer;
 
-                if (stick.get_spell(answer).get_manacost() <= inv.get_stat("mana")) {
-                    if (stick.get_spell(answer).get_name() != "sheild" and stick.get_spell(answer).get_name() != "Nothing") {
-                        inv.set_stat("mana", -1 * stick.get_spell(answer).get_manacost());
-                        enemy.set_hp((-1 * stick.get_spell(answer).get_dmg()));
-                        enemy.set_status(stick.get_spell(answer).get_debuff());
+                if (stick.get_spell(answer - 1).get_manacost() <= inv.get_stat("mana")) {
+                    if (stick.get_spell(answer - 1).get_name() != "sheild" and stick.get_spell(answer - 1).get_name() != "Nothing") {
+                        inv.set_stat("mana", -1 * stick.get_spell(answer - 1).get_manacost());
+                        enemy.set_hp((stick.get_spell(answer - 1).get_dmg()));
+                        /*std::cout << "\n\nSPELL: " << stick.get_spell(answer - 1).get_dmg() << ' ' << stick.get_spell(answer - 1).get_name() << " mana's cost " << std::to_string(stick.get_spell(answer - 1).get_manacost());
+                        std::cout << "\n\nDamage of spell: " << stick.get_spell(answer - 1).get_dmg() << '\n';*/
+                        enemy.set_status(stick.get_spell(answer - 1).get_debuff());
 
                     }
-                    else if (stick.get_spell(answer).get_name() == "sheild") { sheild = 1; }
+                    else if (stick.get_spell(answer - 1).get_name() == "sheild") { sheild = 1; }
+                    stick.delete_spell(answer - 1);
                 }
 
             }
 
         }
+
 
         if (enemy.get_status() != oldstatus and enemy.get_status() != "0") {
             if (enemy.get_status() == "fire") {

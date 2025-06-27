@@ -27,7 +27,7 @@
     }
 
     std::string Spell::get_name() { return this->name; }
-    int Spell::get_dmg() { return this->DMGG; }
+    int Spell::get_dmg() { return DMGG; }
     int Spell::get_manacost() { return this->mana; }
     std::string Spell::get_debuff() { return this->DEBFF; }
 
@@ -68,42 +68,42 @@
             //чуть не закончено, надо побольше сделать переборов разных ситуаций
             //сам подсчёт
             //если встречаються взаимно не соеденяющиеся то уничтожают последний, если соединяються, то добавляем соеденённый эл-т и убираем другие 2.
-            if (to_string(spell[i]) == "f") {
+            if (spell[i] == 'f') {
                 f += 1;
                 if (f > 0 and w > 0) { ste += 1; f -= 1; w -= 1; maxelements += 1; }//пар вода + огонь
                 if (f > 0 and c > 0) { f -= 1; c -= 1; maxelements += 2; }//незя холод + огонь
                 if (f > 0 and ic > 0) { ic -= 1; f -= 1; w += 1; maxelements += 1; }//лёд(холод+вода)+огон
             }
-            else if (to_string(spell[i]) == "w") {
+            else if (spell[i] == 'w') {
                 w += 1;
                 if (d > 0 and w > 0) { to++; w -= 1; d -= 1; maxelements += 1; }//токсин смерть + вода
                 if (f > 0 and w > 0) { ste += 1; f -= 1; w -= 1; maxelements += 1; }//пар вода + огонь
                 if (st > 0 and w > 0) { l -= 1; w -= 1; maxelements += 2; }//незя молнию и воду
 
             }
-            else if (to_string(spell[i]) == "a") {
+            else if (spell[i] == 'a') {
                 l += 1;
                 if (st > 0 and l > 0) { l -= 1; st -= 1; maxelements += 2; }//незя камень и молнию(хз почему првила магики)
                 if (st > 0 and w > 0) { l -= 1; w -= 1; maxelements += 2; }//незя молнию и воду
             }
-            else if (to_string(spell[i]) == "e") { sh += 1; }//это типо щит, просто пока пусть будет ток цена...
+            else if (spell[i] == 'e') { sh += 1; }//это типо щит, просто пока пусть будет ток цена...
 
-            else if (to_string(spell[i]) == "s") {
+            else if (spell[i] == 's') {
                 d += 1;
                 if (d > 0 and w > 0) { to++; w -= 1; d -= 1; maxelements += 1; }//токсин смерть + вода
                 if (h > 0 and d > 0) { h -= 1; d -= 1; maxelements += 2; }//незя хилить + смерт
             }
-            else if (to_string(spell[i]) == "r") {
+            else if (spell[i] == 'r') {
                 c += 1;
                 if (f > 0 and c > 0) { f -= 1; c -= 1; maxelements += 2; }//незя холод + огонь
                 if (ste > 0 and c > 0) { ste -= 1; c -= 1; w += 1; maxelements += 1; }//пар + холод = вода
                 if (c > 0 and w > 0) { ic += 1; c -= 1; w -= 1; maxelements += 1; }// лёд вода+мороз
             }
-            else if (to_string(spell[i]) == "d") {
+            else if (spell[i] == 'd') {
                 st += 1;
                 if (st > 0 and l > 0) { l -= 1; st -= 1; maxelements += 2; }//незя камень и молнию(хз почему првила магики)
             }
-            else if (to_string(spell[i]) == "q") {
+            else if (spell[i] == 'q') {
                 h += 1;
                 if (h > 0 and d > 0) { h -= 1; d -= 1; maxelements += 2; }//незя хилить + смерт
             }
