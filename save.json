@@ -1,14 +1,14 @@
 {
-  "max_hp": 100,
+  "exp": 0,
+  "gold": 10,
   "hp": 100,
   "hp_heal": 2,
-  "max_mana": 10000,
+  "items": {
+    "Goblin's ears": 0
+  },
+  "lvl": 1,
   "mana": 10000,
   "mana_heal": 2,
-  "lvl": 1,
-  "exp": 0,
-  "gold": 0,
-  "items": {
-    
-  }
-}   
+  "max_hp": 100,
+  "max_mana": 10000
+}

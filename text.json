@@ -8,11 +8,11 @@
     "cost": 20
   },
   "intermedium_stick": {
-    "can_buy": false,
+    "can_buy": true,
     "cost": 400
   },
   "master_stick": {
-    "can_buy": false,
+    "can_buy": true,
     "cost": 1000
   }
 }

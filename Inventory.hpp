@@ -1,9 +1,11 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 
+#include <iostream>
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <fstream>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;

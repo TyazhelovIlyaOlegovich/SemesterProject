@@ -16,13 +16,13 @@ void game_manager(std::map<std::string, Location>& locations, std::map<std::stri
 		switch (get_input()) {
 		case(1):
 			std::cout << "\033[2J\033[1;1H"; //\033[2J Ч очистка экрана \033[1;1H Ч перемещение курсора в верхний левый угол
-			inv.set_stat("max_hp", 100);
-			inv.set_stat("hp", 100);
-			inv.set_stat("max_mana", 100);
-			inv.set_stat("mana", 100);
-			inv.set_stat("lvl", 1);
-			inv.set_stat("exp", 0);
-			inv.set_stat("gold", 0);
+			inv.set_stat("max_hp", -inv.get_stat("max_hp") + 100);
+			inv.set_stat("hp", -inv.get_stat("hp") + 100);
+			inv.set_stat("max_mana", -inv.get_stat("max_mana") + 100);
+			inv.set_stat("mana", -inv.get_stat("mana") + 100);
+			inv.set_stat("lvl", -inv.get_stat("lvl") + 1);
+			inv.set_stat("exp", -inv.get_stat("exp"));
+			inv.set_stat("exp", -inv.get_stat("exp"));
 			game(locations, shop, enemies, inv, sticks, spell);
 			break;
 
@@ -50,7 +50,21 @@ void game(std::map<std::string, Location>& locations, std::map<std::string, std:
 				  << "Your choice: ";
 		switch (get_input()) {
 		case(1):
-			//shop const json& text_data
+			std::cout << "\nHello there, want to buy stuff?";
+			for (auto& [item, pair] : shop) {
+				if (pair.first and inv.get_item(item) >= 1) {
+					std::cout << "\nDo you want to sell one " << item << "for " << pair.second << "?\n";
+					if (get_input()) {
+						std::cout << "Here is your money\n";
+						inv.set_stat("gold", pair.second);
+						inv.set_item(item, -1);
+						inv.save();
+					}
+				}
+			}
+			std::cout << "\nBye bye\n";
+			break;
+
 		case(2):
 			std::cout << "\033[2J\033[1;1H";
 			show_locations(locations, shop, enemies, inv, sticks, spell);
@@ -93,16 +107,22 @@ void show_locations(std::map<std::string, Location>& locations, std::map<std::st
 			break;
 		}
 
-		case(2):
-			std::cout << locations.at("swamp").get_room();
+		case(2): {
+			std::string temp{};
+			sticks.count("master_stick") == 1 ? temp = "master_stick" :
+				sticks.count("intermedium_stick") == 1 ? temp = "intermedium_stick" : temp = "newbie_stick";
+			for (int i{}; i < locations.at("swamp").get_room(); i++) {
+				if (fight_manager(enemies.at("swamp"), inv, sticks.at(temp), spell)) {
+					std::cout << "You won\n";
+				}
+				else
+					std::cout << "You lost";
+			}
 			choice = false;
 			break;
+		}
 
 		case(3):
-			std::cout << locations.at("forest").get_room();
-			break;
-
-		case(4):
 			choice = false;
 			break;
 

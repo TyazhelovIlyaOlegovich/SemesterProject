@@ -20,11 +20,9 @@ bool fight_manager(Enemy& enemy, //кого бьём
     while (true) {
         int answer = 0;
 
-
-
-        while (answer <= stick.get_amount()) {
+        while (answer <= stick.get_cells()) {
             std::cout << enemy.name << " " << enemy.get_hp() << "\n" << "\n";
-
+            std::cout << "\nYour max hp: " << inv.get_stat("max_hp") << '\n';
             std::cout << "Your Health " << inv.get_stat("hp") << ".  Your Mana " << inv.get_stat("mana") << ".\n";
 
             std::cout << "Your cells:\n";
@@ -107,7 +105,7 @@ bool fight_manager(Enemy& enemy, //кого бьём
         if (inv.get_stat("hp") == 0 or inv.get_stat("mana") == 0) { return 0; }
 
         if (sheild) { sheild = 0; freezemob = 1; }
-        if (freezemob == 0) { inv.set_stat("hp", -1 * enemy.get_damage()); }
+        if (freezemob == 0) { inv.set_stat("hp", -1 * enemy.get_damage()); std::cout << "\n\nEnemy damage " << enemy.get_damage() << '\n'; }
         else { freezemob = 0; }
 
     }

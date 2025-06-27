@@ -65,6 +65,7 @@ void data_manager(const json& location_data, const json& enemy_data, json& text_
     }
 
     Inventory inv(save_data);
+    std::cout << "\nYour hp: " << inv.get_stat("hp");
 
     Spell spell("0", 0, 0, "0", elements);
 

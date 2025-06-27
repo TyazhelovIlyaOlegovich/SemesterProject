@@ -8,19 +8,20 @@ Inventory::Inventory(const json& save)
 		for (const auto& [key, value] : save["items"].items()) {
 			items[key] = value;
 		}
-		stats["max_hp"] = save["max_hp"];
-		stats["hp"] = save["hp"];
-		stats["hp_heal"] = save["hp_heal"];
-		stats["max_mana"] = save["max_mana"];
-		stats["mana"] = save["mana"];
-		stats["mana_heal"] = save["mana_heal"];
-		stats["lvl"] = save["lvl"];
-		stats["exp"] = save["exp"];
-		stats["gold"] = save["gold"];
+		stats.emplace("max_hp", save["max_hp"]);
+		stats.emplace("hp", save["hp"]);
+		stats.emplace("max_mana", save["max_mana"]);
+		stats.emplace("mana", save["mana"]);
+		stats.emplace("lvl", save["lvl"]);
+		stats.emplace("exp", save["exp"]);
+		stats.emplace("gold", save["gold"]);
+		stats.emplace("hp_heal", save["hp_heal"]);
+		stats.emplace("mana_heal", save["mana_heal"]);
 	}
 
 int Inventory::get_stat(std::string stat) {
-	return stats[stat];
+	std::cout << "\nInventory " << stat << ' ' << stats[stat];
+	return stats.at(stat);
 }
 
 void Inventory::set_stat(std::string stat, int amount) {
@@ -40,13 +41,18 @@ void Inventory::set_stat(std::string stat, int amount) {
 		stats["mana"] += 20;
 		stats["mana_heal"]--;
 	}
-	else {
+	else if(stat == "hp" or stat == "mana") {
 		stat == "hp" and stats["hp"] + amount > stats["max_hp"] ? stats["hp"] = stats["max_hp"] : stats["hp"] += amount;
 		stat == "hp" and stats["hp"] + amount <= 0 ? stats["hp"] = 0: stats["hp"] += amount;
 		stat == "mana" and stats["mana"] + amount > stats["max_mana"] ? stats["mana"] = stats["max_mana"] : stats["mana"] += amount;
 		stat == "mana" and stats["mana"] + amount <= 0 ? stats["mana"] = 0 : stats["mana"] += amount;
 	}
-	stats[stat] += amount;
+	else if (stat == "exp") {
+		stats[stat] += amount;
+	}
+	else if (stat == "gold") {
+		stats[stat] += amount;
+	}
 }
 
 int Inventory::get_item(std::string item) {
@@ -58,6 +64,7 @@ void Inventory::set_item(std::string item, int amount) {
 }
 
 void Inventory::save() {
+	std::ofstream output("save.json");
 	save_data["max_hp"] = get_stat("max_hp");
 	save_data["hp"] = get_stat("hp");
 	save_data["max_mana"] = get_stat("max_mana");
@@ -68,4 +75,6 @@ void Inventory::save() {
 	for (const auto& pair : items) {
 		save_data["items"][pair.first] = pair.second;
 	}
+	output << save_data.dump(2);
+	output.close();
 }
